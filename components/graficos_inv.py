@@ -7,7 +7,17 @@ ROJO    = "#EF4444"
 VERDE   = "#10B981"
 AMARILLO= "#F59E0B"
 
+def _limpiar(df):
+    df = df.copy()
+    df.columns = df.columns.str.strip().str.lower()
+    df["stock_actual"]      = df["stock_actual"].fillna(0)
+    df["precio_unitario"]   = df["precio_unitario"].fillna(0)
+    df["unidades_vendidas"] = df["unidades_vendidas"].fillna(0)
+    df["stock_minimo"]      = df["stock_minimo"].fillna(0)
+    return df
+
 def grafico_stock_categorias(df):
+    df = _limpiar(df)
     resumen = df.groupby("categoria")["stock_actual"].sum().reset_index()
     resumen = resumen.sort_values("stock_actual", ascending=True)
     colores = [AZUL if i == len(resumen)-1 else "#93C5FD" for i in range(len(resumen))]
@@ -15,7 +25,7 @@ def grafico_stock_categorias(df):
         x=resumen["stock_actual"], y=resumen["categoria"],
         orientation="h",
         marker=dict(color=colores, line=dict(width=0)),
-        text=resumen["stock_actual"].apply(lambda x: f"{x} uds"),
+        text=resumen["stock_actual"].apply(lambda x: f"{int(x)} uds"),
         textposition="outside",
         textfont=dict(size=12, color="#0F2044")
     ))
@@ -29,13 +39,14 @@ def grafico_stock_categorias(df):
     st.plotly_chart(fig, use_container_width=True)
 
 def grafico_mas_vendidos(df):
+    df = _limpiar(df)
     top = df.nlargest(8, "unidades_vendidas")[["producto", "unidades_vendidas"]]
     top = top.sort_values("unidades_vendidas", ascending=True)
     fig = go.Figure(go.Bar(
         x=top["unidades_vendidas"], y=top["producto"],
         orientation="h",
         marker=dict(color=VERDE, line=dict(width=0)),
-        text=top["unidades_vendidas"].apply(lambda x: f"{x} uds"),
+        text=top["unidades_vendidas"].apply(lambda x: f"{int(x)} uds"),
         textposition="outside",
         textfont=dict(size=11, color="#0F2044")
     ))
@@ -49,7 +60,7 @@ def grafico_mas_vendidos(df):
     st.plotly_chart(fig, use_container_width=True)
 
 def grafico_valor_categoria(df):
-    df = df.copy()
+    df = _limpiar(df)
     df["valor"] = df["stock_actual"] * df["precio_unitario"]
     resumen = df.groupby("categoria")["valor"].sum().reset_index()
     fig = px.pie(

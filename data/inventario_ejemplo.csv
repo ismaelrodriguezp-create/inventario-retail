@@ -1,0 +1,17 @@
+producto,categoria,stock_actual,stock_minimo,precio_unitario,unidades_vendidas
+Laptop HP 14,Electronica,12,5,2500,45
+Smartphone Samsung A54,Electronica,8,10,1200,82
+Auriculares Sony,Electronica,25,8,180,63
+Cable USB-C,Electronica,150,30,15,210
+Camiseta Polo,Ropa,60,20,45,95
+Jeans Slim,Ropa,35,15,89,78
+Zapatillas Nike,Ropa,4,10,320,55
+Vestido Casual,Ropa,22,10,75,41
+Silla de Oficina,Hogar,6,5,450,28
+Lámpara LED,Hogar,40,10,65,72
+Cojín Decorativo,Hogar,55,15,35,38
+Espejo Baño,Hogar,3,8,120,19
+Arroz 5kg,Alimentos,200,50,18,310
+Aceite Vegetal 1L,Alimentos,180,40,8,280
+Leche Evaporada,Alimentos,95,30,4,420
+Atún en Lata,Alimentos,120,40,5,195
